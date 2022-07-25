@@ -6,7 +6,7 @@
 > This module uses [`ioredis`](https://github.com/luin/ioredis), [`@socket.io/redis-emitter`](https://github.com/socketio/redis-emitter) and [`@socket.io/redis-adapter`](https://github.com/socketio/redis-adapter) to connect to Redis.
 
 ## Installation
-```npm i nestjs-redis-plus ioredis socket.io @nestjs/websockets @nestjs/platform-socket.io @socket.io/redis-adapter @socket.io/redis-emitter`
+`npm i nestjs-redis-plus ioredis socket.io @nestjs/websockets @nestjs/platform-socket.io @socket.io/redis-adapter @socket.io/redis-emitter`
 
 ## Usage
 ```ts
