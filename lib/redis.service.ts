@@ -119,6 +119,11 @@ export class RedisService implements OnModuleInit {
     return keys;
   }
 
+  async expireKey(key: RedisKey, ttl: number) {
+    const isExpired = await this.redis.expire(key, ttl);
+    return isExpired === 1;
+  }
+
   async setAndExpireKey(key: RedisKey, value: RedisValue, ttl: number) {
     const isSet = await this.redis.set(key, value, "EX", ttl);
     return isSet === "OK";
