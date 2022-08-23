@@ -41,7 +41,7 @@
     "test:e2e": "ts-node-dev test/src/main.ts",
     "build": "rimraf dist && tsc -p tsconfig.build.json",
     "release:pre": "pnpm test:run && pnpm build && release-it --preRelease",
-    "release:patch": "npm run release -- patch"
+    "release:patch": "pnpm test:run && pnpm build && release-it patch"
   },
   "devDependencies": {
     "@nestjs/common": "^9.0.11",
@@ -92,6 +92,20 @@
     },
     "socket.io": {
       "optional": true
+    }
+  },
+  "release-it": {
+    "git": {
+      "addUntrackedFiles": true,
+      "tag": true,
+      "commit": true,
+      "push": true
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": false
     }
   }
 }
