@@ -37,10 +37,10 @@
   ],
   "scripts": {
     "test": "vitest",
+    "test:run": "vitest --run",
     "test:e2e": "ts-node-dev test/src/main.ts",
     "build": "rimraf dist && tsc -p tsconfig.build.json",
-    "release": "vitest --run && npm run build && release-it",
-    "release:pre": "npm run release -- --prerelease",
+    "release:pre": "pnpm test:run && pnpm build && release-it --preRelease",
     "release:patch": "npm run release -- patch"
   },
   "devDependencies": {
