@@ -39,7 +39,9 @@
     "test": "vitest",
     "test:e2e": "ts-node-dev test/src/main.ts",
     "build": "rimraf dist && tsc -p tsconfig.build.json",
-    "release": "vitest --run && npm run build && release-it"
+    "release": "vitest --run && npm run build && release-it",
+    "release:pre": "npm run release -- --prerelease",
+    "release:patch": "npm run release -- patch"
   },
   "devDependencies": {
     "@nestjs/common": "^9.0.11",
