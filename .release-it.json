@@ -1,0 +1,14 @@
+{
+  "git": {
+    "addUntrackedFiles": true,
+    "tag": true,
+    "commit": true,
+    "push": true
+  },
+  "npm": {
+    "publish": true
+  },
+  "github": {
+    "release": false
+  }
+}
