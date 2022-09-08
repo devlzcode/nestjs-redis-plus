@@ -54,6 +54,18 @@ export class RedisService implements OnModuleInit {
     return this.redis.get(key);
   }
 
+  getAndSetKey(key: RedisKey, value: RedisValue) {
+    return this.redis.getset(key, value);
+  }
+
+  getAndDeleteKey(key: RedisKey) {
+    return this.redis.getdel(key);
+  }
+
+  getAndExpireKey(key: RedisKey, ttl: number) {
+    return this.redis.getex(key, "EX", ttl);
+  }
+
   async getKeys(keys: RedisKey[]) {
     const values = await this.redis.mget(keys);
     return new Map(keys.map((key, index) => [key, values[index]]));
@@ -154,7 +166,50 @@ export class RedisService implements OnModuleInit {
     return isRefreshed === "OK";
   }
 
+  incrKey(key: RedisKey) {
+    return this.redis.incr(key);
+  }
+
+  incrKeyBy(key: RedisKey, increment: number) {
+    return this.redis.incrby(key, increment);
+  }
+
+  async incrKeyByFloat(key: RedisKey, increment: number) {
+    const result = await this.redis.incrbyfloat(key, increment);
+    return parseFloat(result);
+  }
+
+  decrKey(key: RedisKey) {
+    return this.redis.decr(key);
+  }
+
+  decrKeyBy(key: RedisKey, decrement: number) {
+    return this.redis.decrby(key, decrement);
+  }
+
   // Maps
+
+  setMap(key: RedisKey, map: Map<RedisKey, RedisValue>) {
+    return this.redis.hmset(key, map);
+  }
+
+  async getMap(key: RedisKey) {
+    const records = await this.getMapAsObject(key);
+    return new Map(Object.entries(records));
+  }
+
+  async getMapAsObject(key: RedisKey) {
+    const records = await this.redis.hgetall(key);
+    return records;
+  }
+
+  getMapKeys(key: RedisKey) {
+    return this.redis.hkeys(key);
+  }
+
+  getMapValues(key: RedisKey) {
+    return this.redis.hvals(key);
+  }
 
   setField(key: RedisKey, field: RedisKey, value: RedisValue) {
     return this.redis.hset(key, field, value);
@@ -164,30 +219,12 @@ export class RedisService implements OnModuleInit {
     return this.redis.hmset(key, fields);
   }
 
-  setMap(key: RedisKey, map: Map<RedisKey, RedisValue>) {
-    return this.redis.hmset(key, map);
-  }
-
-  getFieldKeys(key: RedisKey) {
-    return this.redis.hkeys(key);
-  }
-
   getField(key: RedisKey, field: RedisKey) {
     return this.redis.hget(key, field);
   }
 
   getFields(key: RedisKey, fields: RedisKey[]) {
     return this.redis.hmget(key, ...fields);
-  }
-
-  async getAllFields(key: RedisKey) {
-    const records = await this.redis.hgetall(key);
-    return records;
-  }
-
-  async getMap(key: RedisKey) {
-    const records = await this.getAllFields(key);
-    return new Map(Object.entries(records));
   }
 
   delField(key: RedisKey, field: RedisKey) {
@@ -282,6 +319,15 @@ export class RedisService implements OnModuleInit {
 
   unlockField(key: RedisKey, field: RedisKey) {
     return this.delField(key, field);
+  }
+
+  incrFieldBy(key: RedisKey, field: RedisKey, increment: number) {
+    return this.redis.hincrby(key, field, increment);
+  }
+
+  async incrFieldByFloat(key: RedisKey, field: RedisKey, increment: number) {
+    const result = await this.redis.hincrbyfloat(key, field, increment);
+    return parseFloat(result);
   }
 
   // Sets
