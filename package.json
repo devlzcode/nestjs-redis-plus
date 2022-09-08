@@ -1,6 +1,6 @@
 {
   "name": "nestjs-redis-plus",
-  "version": "2.0.0-13",
+  "version": "2.0.0-14",
   "author": "Ly",
   "repository": "git://github.com/agent-ly/nestjs-redis-plus.git",
   "description": "A super-powered Nestjs Redis module",
